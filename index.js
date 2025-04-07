@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: [
         'http://localhost:3000', // For local development
-        'https://skyblumes-travel.vercel.app' // Your Vercel deployment
+        'https://skyblumestravelhub.vercel.app' // Your Vercel deployment
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true // Include if you need to handle cookies/auth

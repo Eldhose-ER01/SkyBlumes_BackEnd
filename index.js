@@ -1,44 +1,36 @@
 const express = require('express');
 const app = express();
-const path = require('path');
-const fs = require('fs');
-const passport = require('passport');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const passport = require('passport');
 require('dotenv').config();
-const uploadDir = path.join(__dirname, 'public/Images');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-app.use(express.static(path.join(__dirname, '/public')));
 
 const userRoutes = require('./routes/User');
 const adminRoutes = require('./routes/Admin');
 
-app.use(cors());
-app.use(express.json());
-app.use(passport.initialize());
-app.use(express.urlencoded({ extended: true }));
-// Replace your current CORS setup with this:
+// Middleware
 app.use(cors({
     origin: [
-        'http://localhost:3000', // For local development
-        'https://skyblumestravelhub.vercel.app' // Your Vercel deployment
+        'http://localhost:3000', // Local frontend
+        'https://skyblumestravelhub.vercel.app' // Your Vercel frontend
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials: true // Include if you need to handle cookies/auth
+    credentials: true
 }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
 
-// Make sure to REMOVE the duplicate app.use(cors()) call
-
+// Connect DB
 mongoose.connect(process.env.DATABASE).then(() => {
     console.log('DB connected');
-});
+}).catch(err => console.log('DB connection error:', err));
 
+// Routes
 app.use('/', userRoutes);
 app.use('/admin', adminRoutes);
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log("Server running on port " + PORT);
+    console.log(`Server running on port ${PORT}`);
 });

@@ -104,7 +104,11 @@ const userLogin = async (req, res) => {
 const forGetOtp=async(req,res)=>{
   try {
     const {email}=req.body.data
+    console.log(email,"emailllll");
+    
       otp = await sendotp(email);
+      console.log(otp,"ooooooooooooooooooooooooooooooo");
+      
       res.status(200).json({success:true})
     }
     
@@ -117,6 +121,8 @@ const forgetOtpsubmit=async(req,res)=>{
   try {
     const details=req.body.data
     const convertotp = Object.values(details.otp).join('').toString().replace(/,/g, '');
+    console.log(convertotp,"convertotpconvertotp");
+    
     if(otp==convertotp){
 
       res.status(200).json({success:true,message:"success"})

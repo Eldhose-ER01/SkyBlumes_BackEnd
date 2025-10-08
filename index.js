@@ -12,7 +12,7 @@ const adminRoutes = require('./routes/Admin');
 app.use(cors({
     origin: [
         'http://localhost:3000', // Local frontend
-        'https://skyblumestravelhub.vercel.app' // Your Vercel frontend
+        // 'https://skyblumestravelhub.vercel.app' // Your Vercel frontend
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true

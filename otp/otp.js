@@ -34,6 +34,8 @@ const sendotp = async (email) => {
   });
 
   await sMail(email, otp);
+  console.log(email,otp);
+  
   return otp;
 };
 
